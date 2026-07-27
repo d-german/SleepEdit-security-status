@@ -5,10 +5,10 @@
 | .NET tests passed | 244 |
 | .NET tests failed | 0 |
 | Overall coverage | 43.8% |
-| Line coverage | Pending |
-| Branch coverage | Pending |
-| Cyclomatic complexity | Pending |
-| Cognitive complexity | Pending |
+| Line coverage | 46.2% |
+| Branch coverage | 37.3% |
+| Cyclomatic complexity | 2121 |
+| Cognitive complexity | 1185 |
 | Duplicated lines density | 0.5% |
 | Bugs | 4 |
 | Code smells | 215 |

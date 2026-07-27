@@ -10,8 +10,8 @@ This site publishes sanitized results from the independent security and quality 
 | Automated tests | Passed |
 | Code coverage | 43.8% |
 
-Last scan: 2026-07-27 17:36:36 UTC
+Last scan: 2026-07-27 19:21:01 UTC
 
-Commit: d1600962dae6
+Commit: e3ae7a2d290e
 
 See [Methodology and disclosure](methodology.md) for what is published and what is intentionally withheld.
