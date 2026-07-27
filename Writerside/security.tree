@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE instance-profile
+        SYSTEM "https://resources.jetbrains.com/writerside/1.0/product-profile.dtd">
+
+<instance-profile id="security"
+                  name="SleepEdit Security Status"
+                  start-page="status-overview.md">
+
+    <toc-element topic="status-overview.md"/>
+    <toc-element topic="dependency-security.md"/>
+    <toc-element topic="source-analysis.md"/>
+    <toc-element topic="quality-and-testing.md"/>
+    <toc-element topic="methodology.md"/>
+</instance-profile>

@@ -1,0 +1,101 @@
+﻿name: Publish security status
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Build and validate Writerside site
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+
+      - name: Validate and render public report
+        shell: pwsh
+        run: |
+          ./scripts/Render-StatusPages.ps1
+          git diff --exit-code -- Writerside/topics
+
+      - name: Build Writerside documentation
+        uses: JetBrains/writerside-github-action@738910d7cf197d67188300d0e0f84b2e708db3cf
+        with:
+          instance: Writerside/security
+          artifact: webHelpSECURITY2-all.zip
+          docker-version: 2026.06.8817
+
+      - name: Upload Writerside build
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: writerside-site
+          path: |
+            artifacts/webHelpSECURITY2-all.zip
+            artifacts/report.json
+          if-no-files-found: error
+          retention-days: 30
+
+  test:
+    name: Check documentation output
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Download Writerside build
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          name: writerside-site
+          path: artifacts
+
+      - name: Check Writerside report
+        uses: JetBrains/writerside-checker-action@79ff89902dcd3d5c5a3f26a79bc35830377f38c5
+        with:
+          instance: Writerside/security
+
+  deploy:
+    name: Deploy GitHub Pages
+    needs:
+      - build
+      - test
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Download Writerside build
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          name: writerside-site
+          path: artifacts
+
+      - name: Extract Writerside site
+        run: unzip -qq artifacts/webHelpSECURITY2-all.zip -d site
+
+      - name: Configure Pages
+        uses: actions/configure-pages@983d7736d9b0ae728b81ab479565c72886d7745b
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa
+        with:
+          path: site
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e

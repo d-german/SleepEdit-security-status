@@ -1,0 +1,57 @@
+{
+  "schemaVersion": 1,
+  "product": "SleepEdit",
+  "source": "private-release-workflow",
+  "commit": "d1600962dae6",
+  "scanDateUtc": "2026-07-27T17:36:36.6589129+00:00",
+  "overall": "passed",
+  "dependencies": {
+    "status": "passed",
+    "nuget": {
+      "total": 0,
+      "critical": 0,
+      "high": 0,
+      "moderate": 0,
+      "low": 0
+    },
+    "npm": {
+      "total": 0,
+      "critical": 0,
+      "high": 0,
+      "moderate": 0,
+      "low": 0
+    }
+  },
+  "staticAnalysis": {
+    "status": "passed",
+    "qualityGate": "passed",
+    "vulnerabilities": 4.0,
+    "securityHotspots": 0.0,
+    "securityHotspotsReviewedPercent": null,
+    "documentedExceptions": 4,
+    "securityRating": 3.0
+  },
+  "quality": {
+    "coveragePercent": 43.8,
+    "lineCoveragePercent": null,
+    "branchCoveragePercent": null,
+    "complexity": null,
+    "cognitiveComplexity": null,
+    "duplicatedLinesDensityPercent": 0.5,
+    "bugs": 4.0,
+    "codeSmells": 215.0,
+    "maintainabilityRating": 1.0,
+    "linesOfCode": 12263.0
+  },
+  "tests": {
+    "status": "passed",
+    "total": 244,
+    "passed": 244,
+    "failed": 0,
+    "skipped": 0
+  },
+  "tooling": {
+    "sonarQubeVersion": "26.7.0.124771",
+    "sonarScannerVersion": "11.2.0"
+  }
+}
