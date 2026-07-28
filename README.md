@@ -1,7 +1,7 @@
-﻿# SleepEdit Security Status
+# SleepEdit Security and Quality Reports
 
-This public repository contains sanitized security, dependency, test, coverage, and code-quality summaries for SleepEdit. The source repository and detailed scanner evidence remain private.
+This repository publishes static, detailed transparency reports for SleepEdit's `main` branch and active `feature/*` and `feat/*` branches. GitHub Pages serves the rendered reports from [`index.html`](index.html).
 
-`data/latest.json` is the machine-readable public record. The Writerside pages are generated from that file by `scripts/Render-StatusPages.ps1` and deployed through GitHub Pages.
+Each report discloses the scanned branch and commit, completed or incomplete scan state, quality-gate result, coverage, dependency findings, test totals, and SonarQube issue and hotspot details. A failed, cancelled, or incomplete scan is shown explicitly and is never presented as passing.
 
-The publishing GitHub App is restricted to this repository and has only metadata read and contents write access. See the public site's methodology page for disclosure boundaries and limitations.
+Raw scanner JSON, XML, TRX files, source text, credentials, private paths, and private artifact links remain private in the source repository's release evidence. The publishing GitHub App is restricted to this repository and has only metadata-read and contents-write access.
