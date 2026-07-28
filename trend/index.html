@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'">
 
-  <title>SleepEdit Security and Quality Reports</title>
+  <title>SleepEdit Security and Quality Trend</title>
   <style>
   :root { color-scheme: light; --navy:#020f59; --blue:#00449d; --ink:#18202b; --muted:#586577; --line:#d8dee8; --surface:#fff; --page:#f4f7fb; --bad:#b42318; --neutral:#586577; }
   * { box-sizing:border-box; } body { margin:0; background:var(--page); color:var(--ink); font:16px/1.5 "Segoe UI",Arial,sans-serif; }
@@ -19,19 +19,13 @@
 </style>
 </head>
 <body><main><article>
-  <p class="eyebrow">Public transparency reports</p>
-  <h1>SleepEdit Security and Quality Reports</h1>
-  <p>This site renders detailed scan outcomes for the main branch and active feature branches. It intentionally does not expose raw scanner artifacts, source text, credentials, or private filesystem paths.</p>
-  <p><a href="trend/index.html">Security and quality trend</a></p>
-  <h2>Available reports</h2>
-  <table><thead><tr><th>Branch</th><th>Commit</th><th>Scan state</th></tr></thead><tbody><tr>
-    <td><a href="reports/main/index.html"><code>main</code></a></td>
-    <td><code>387fc1dc8e5ea8386ff1fe13399ef8a19ffe2c4e</code></td>
-    <td>complete</td>
-  </tr><tr>
-    <td><a href="reports/feature-admin-blazor-modernization-c0f7e7ddd9/index.html"><code>feature/admin-blazor-modernization</code></a></td>
-    <td><code>bea813d0bae7ed502c303c2f0727109716544e65</code></td>
-    <td>complete</td>
-  </tr></tbody></table>
-</article><footer>Reports are regenerated on qualifying pushes. An incomplete scan is displayed explicitly.</footer></main></body>
+  <p class="eyebrow">Historical main-branch scans</p>
+  <h1>Security and Quality Trend</h1>
+  <p>This timeline records aggregate measurements from completed scans of <code>main</code>. Counts can change when scanner rules, scanner versions, or analyzed languages change; interpret changes alongside the recorded scan context rather than as a score alone.</p>
+  <p><a href="../index.html">Back to current reports</a></p>
+  <h2>Latest recorded baseline</h2>
+  <p class="notice"><strong>No main-branch snapshot has been captured yet.</strong> The first complete main scan using this publisher will establish the baseline.</p>
+  <h2>Scan history</h2>
+  <p>No completed main-branch scans have been recorded yet.</p>
+</article><footer>Only aggregate metrics are retained here. Raw artifacts, source paths, issue messages, credentials, and private filesystem paths are not published.</footer></main></body>
 </html>
