@@ -32,6 +32,11 @@ jobs:
           New-Item -ItemType Directory -Path site -Force | Out-Null
           Copy-Item -LiteralPath index.html -Destination site/index.html
           Copy-Item -LiteralPath reports -Destination site/reports -Recurse
+          Copy-Item -LiteralPath trend -Destination site/trend -Recurse
+
+      - name: Validate static Pages artifact
+        shell: pwsh
+        run: ./scripts/Test-PublicReport.ps1 -SiteRoot site -RequireMainReport
 
       - name: Upload static report site
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
