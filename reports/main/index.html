@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'">
   <meta name="sleepedit-report-branch" content="main">
-  <meta name="sleepedit-report-commit" content="053d856b45fcfc693f0dffe2059ca6e690749ad7">
+  <meta name="sleepedit-report-commit" content="7969b3503c97cef52ff6c8677598ebcf28bffc3e">
   <meta name="sleepedit-report-state" content="complete">
 
   <title>SleepEdit Security and Quality Evidence</title>
@@ -85,11 +85,11 @@
       <span class="status status-good">OK</span>
     </div>
     <dl class="metadata">
-      <div><dt>Evidence scan</dt><dd>Jul 28, 2026, 9:26:49 PM UTC UTC</dd></div>
-      <div><dt>Report generated</dt><dd>Jul 28, 2026, 9:27:14 PM UTC UTC</dd></div>
-      <div><dt>Analyzed commit</dt><dd><code>053d856b45fc</code></dd></div>
+      <div><dt>Evidence scan</dt><dd>Jul 29, 2026, 12:26:09 PM UTC UTC</dd></div>
+      <div><dt>Report generated</dt><dd>Jul 29, 2026, 12:26:41 PM UTC UTC</dd></div>
+      <div><dt>Analyzed commit</dt><dd><code>7969b3503c97</code></dd></div>
       <div><dt>SonarQube</dt><dd>26.7.0.124771</dd></div>
-      <div><dt>Branch</dt><dd><code>main</code></dd></div><div><dt>Workflow</dt><dd><a href="https://github.com/d-german/SleepEditWeb/actions/runs/30400502258">View scan run</a></dd></div>
+      <div><dt>Branch</dt><dd><code>main</code></dd></div><div><dt>Workflow</dt><dd><a href="https://github.com/d-german/SleepEditWeb/actions/runs/30451374077">View scan run</a></dd></div>
     </dl>
   </header>
     <section aria-labelledby="coverage-heading">
@@ -106,7 +106,7 @@
       <button type="button" class="metric-help" aria-label="About Sonar aggregate coverage" aria-describedby="sonar-aggregate-coverage-help"><span aria-hidden="true">i</span></button>
       <span id="sonar-aggregate-coverage-help" role="tooltip" class="metric-tooltip">The combined percentage of executable lines and decision conditions exercised by tests in the coverage report imported into SonarQube.</span>
     </div>
-    <p class="metric-value">46%</p>
+    <p class="metric-value">81.9%</p>
     <p class="metric-detail">Scanner-reported aggregate</p>
   </article>
       <article class="metric-card">
@@ -115,7 +115,7 @@
       <button type="button" class="metric-help" aria-label="About Sonar line coverage" aria-describedby="sonar-line-coverage-help"><span aria-hidden="true">i</span></button>
       <span id="sonar-line-coverage-help" role="tooltip" class="metric-tooltip">The percentage of executable source lines run by tests in the coverage report imported into SonarQube.</span>
     </div>
-    <p class="metric-value">48.3%</p>
+    <p class="metric-value">83.8%</p>
     <p class="metric-detail">Scanner-reported lines</p>
   </article>
       <article class="metric-card">
@@ -124,7 +124,7 @@
       <button type="button" class="metric-help" aria-label="About Sonar branch coverage" aria-describedby="sonar-branch-coverage-help"><span aria-hidden="true">i</span></button>
       <span id="sonar-branch-coverage-help" role="tooltip" class="metric-tooltip">The percentage of decision outcomes, such as both true and false paths, exercised by tests in the coverage report imported into SonarQube.</span>
     </div>
-    <p class="metric-value">39.5%</p>
+    <p class="metric-value">76.9%</p>
     <p class="metric-detail">Scanner-reported branches</p>
   </article>
       <article class="metric-card">
@@ -133,8 +133,8 @@
       <button type="button" class="metric-help" aria-label="About OpenCover C# coverage" aria-describedby="opencover-coverage-help"><span aria-hidden="true">i</span></button>
       <span id="opencover-coverage-help" role="tooltip" class="metric-tooltip">C# test coverage measured by OpenCover. The large value is line coverage; branch coverage appears in the supporting detail.</span>
     </div>
-    <p class="metric-value">55.5%</p>
-    <p class="metric-detail">Newest retained OpenCover report; branch coverage 38.93%</p>
+    <p class="metric-value">80.79%</p>
+    <p class="metric-detail">Newest retained OpenCover report; branch coverage 71.02%</p>
   </article>
       <article class="metric-card">
     <div class="metric-heading">
@@ -142,8 +142,8 @@
       <button type="button" class="metric-help" aria-label="About JavaScript and TypeScript coverage" aria-describedby="frontend-coverage-help"><span aria-hidden="true">i</span></button>
       <span id="frontend-coverage-help" role="tooltip" class="metric-tooltip">JavaScript and TypeScript test coverage measured from the verified first-party LCOV report. The large value is line coverage.</span>
     </div>
-    <p class="metric-value">1.11%</p>
-    <p class="metric-detail">Verified first-party LCOV; branch coverage 15.79%</p>
+    <p class="metric-value">94%</p>
+    <p class="metric-detail">Verified first-party LCOV; branch coverage 85.67%</p>
   </article>
     </div>
   </section>
@@ -290,11 +290,24 @@
     </dl>
   </article>
       <article class="evidence-panel"><h3>.NET tests</h3><dl class="count-list">
-        <div><dt>Total</dt><dd>329</dd></div>
-        <div><dt>Passed</dt><dd>329</dd></div>
+        <div><dt>Total</dt><dd>424</dd></div>
+        <div><dt>Passed</dt><dd>424</dd></div>
         <div><dt>Failed</dt><dd>0</dd></div>
         <div><dt>Skipped</dt><dd>0</dd></div>
       </dl></article>
+      <article class="evidence-panel">
+    <div class="metric-heading">
+      <h3>First-party automated test source</h3>
+      <button type="button" class="metric-help" aria-label="About First-party automated test source" aria-describedby="test-source-lines-help"><span aria-hidden="true">i</span></button>
+      <span id="test-source-lines-help" role="tooltip" class="metric-tooltip">The physical nonblank source lines in explicitly scoped first-party automated tests. It indicates test investment, not a quality score.</span>
+    </div>
+    <dl class="count-list">
+      <div><dt>Nonblank source lines</dt><dd>12,619</dd></div>
+      <div><dt>Test source files</dt><dd>83</dd></div>
+    </dl>
+    <div class="spacer"></div>
+    <div class="table-scroll"><table><thead><tr><th scope="col">Test area</th><th scope="col">Files</th><th scope="col">Nonblank lines</th></tr></thead><tbody><tr><td>.NET test project and harness</td><td>39</td><td>7,740</td></tr><tr><td>Browser unit and boundary tests</td><td>17</td><td>2,470</td></tr><tr><td>End-to-end browser tests and fixtures</td><td>18</td><td>1,848</td></tr><tr><td>Security-report and verification tests</td><td>9</td><td>561</td></tr></tbody></table></div>
+  </article>
     </div>
   </section>
     <section aria-labelledby="issues-heading">
