@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; img-src 'self'">
   <meta name="sleepedit-report-branch" content="main">
-  <meta name="sleepedit-report-commit" content="0067d7871646b6d3a28a3d1f793915e21666b266">
+  <meta name="sleepedit-report-commit" content="d7f47ee5e07f59617e0535a392846043fa483520">
   <meta name="sleepedit-report-state" content="complete">
 
   <title>SleepEdit Security and Quality Evidence</title>
@@ -24,6 +24,7 @@
   .subtitle,.metric-definition,.metric-detail,.empty-state { color:var(--muted); }
   .subtitle { margin:10px 0 0; }
   .gate-panel { min-width:200px; display:flex; align-items:center; justify-content:space-between; gap:14px; align-self:start; padding:12px 14px; background:#eef4fb; border-radius:10px; font-weight:650; }
+  .sonar-badge { display:block; max-width:100%; height:auto; }
   .metadata { grid-column:1/-1; display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:0; }
   .metadata div,.count-list div { display:flex; justify-content:space-between; gap:12px; }
   .metadata div { flex-direction:column; padding:12px; background:#f7f9fc; border-radius:10px; }
@@ -76,13 +77,12 @@
       <p class="subtitle">Detailed scan results. Missing measurements remain visible.</p>
     </div>
     <div class="gate-panel">
-      <span>SonarQube quality gate</span>
-      <span class="status status-good">OK</span>
+      <a href="https://sonarcloud.io/summary/overall?id=d-german_SleepEditWeb&amp;branch=main" aria-label="View the SleepEdit quality gate in SonarQube Cloud"><img class="sonar-badge" src="sonarqube-quality-gate.svg" alt="Official SonarQube Cloud quality gate badge"></a>
     </div>
     <dl class="metadata">
-      <div><dt>Evidence scan</dt><dd>Aug 3, 2026, 10:13:38 PM UTC UTC</dd></div>
-      <div><dt>Report generated</dt><dd>Aug 3, 2026, 10:14:15 PM UTC UTC</dd></div>
-      <div><dt>Analyzed commit</dt><dd><code>0067d7871646</code></dd></div>
+      <div><dt>Evidence scan</dt><dd>Aug 3, 2026, 10:50:16 PM UTC UTC</dd></div>
+      <div><dt>Report generated</dt><dd>Aug 3, 2026, 10:50:43 PM UTC UTC</dd></div>
+      <div><dt>Analyzed commit</dt><dd><code>d7f47ee5e07f</code></dd></div>
       <div><dt>SonarQube</dt><dd>8.0.0.100137</dd></div>
       <div><dt>Branch</dt><dd><code>main</code></dd></div>
     </dl>
@@ -192,7 +192,7 @@
   </article>
       <article class="metric-card" id="lines-of-code">
     <div class="metric-heading"><h3>Lines of code</h3></div>
-    <p class="metric-value">16232</p>
+    <p class="metric-value">16244</p>
     <p class="metric-definition">The number of analyzed non-comment source lines reported by SonarQube.</p>
 
   </article>
@@ -245,11 +245,11 @@
     <div class="metric-heading"><h3>First-party automated test source</h3></div>
     <p class="metric-definition">The physical nonblank source lines in explicitly scoped first-party automated tests. It indicates test investment, not a quality score.</p>
     <dl class="count-list">
-      <div><dt>Nonblank source lines</dt><dd>15,731</dd></div>
+      <div><dt>Nonblank source lines</dt><dd>15,733</dd></div>
       <div><dt>Test source files</dt><dd>102</dd></div>
     </dl>
     <div class="spacer"></div>
-    <div class="table-scroll"><table><thead><tr><th scope="col">Test area</th><th scope="col">Files</th><th scope="col">Nonblank lines</th></tr></thead><tbody><tr><td>.NET test project and harness</td><td>51</td><td>9,491</td></tr><tr><td>Browser unit and boundary tests</td><td>20</td><td>3,410</td></tr><tr><td>End-to-end browser tests and fixtures</td><td>22</td><td>2,214</td></tr><tr><td>Security-report and verification tests</td><td>9</td><td>616</td></tr></tbody></table></div>
+    <div class="table-scroll"><table><thead><tr><th scope="col">Test area</th><th scope="col">Files</th><th scope="col">Nonblank lines</th></tr></thead><tbody><tr><td>.NET test project and harness</td><td>51</td><td>9,491</td></tr><tr><td>Browser unit and boundary tests</td><td>20</td><td>3,410</td></tr><tr><td>End-to-end browser tests and fixtures</td><td>22</td><td>2,214</td></tr><tr><td>Security-report and verification tests</td><td>9</td><td>618</td></tr></tbody></table></div>
   </article>
     </div>
   </section>
