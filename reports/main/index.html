@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; img-src 'self'">
   <meta name="sleepedit-report-branch" content="main">
-  <meta name="sleepedit-report-commit" content="1061f2cd7d3b7d4bac7bf4c266d500393e94266a">
+  <meta name="sleepedit-report-commit" content="332b74ff034730db5fb8de7fda3e6d3938f84fa8">
   <meta name="sleepedit-report-state" content="complete">
 
   <title>SleepEdit Security and Quality Evidence</title>
@@ -42,6 +42,12 @@
   .metric-detail { margin:4px 0 0; font-size:.86rem; }
   .summary-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; }
   .evidence-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px; }
+  .architecture-grid { display:grid; gap:18px; }
+  .architecture-figure { margin:0; overflow:hidden; border:1px solid var(--line); border-radius:12px; background:#fbfcfe; }
+  .architecture-figure > a { display:block; background:#fff; }
+  .architecture-figure img { display:block; width:100%; height:auto; }
+  .architecture-figure figcaption { padding:16px; }
+  .architecture-figure figcaption p { margin:0 0 8px; color:var(--muted); }
   .count-list { display:grid; gap:8px; margin:0; }
   .count-list div { padding-top:8px; border-top:1px solid var(--line); }
   .table-scroll { max-width:100%; overflow:auto; border:1px solid var(--line); border-radius:10px; }
@@ -80,9 +86,9 @@
       <a href="https://sonarcloud.io/summary/overall?id=d-german_SleepEditWeb&amp;branch=main" aria-label="View the SleepEdit quality gate in SonarQube Cloud"><img class="sonar-badge" src="sonarqube-quality-gate.svg" alt="Official SonarQube Cloud quality gate badge"></a>
     </div>
     <dl class="metadata">
-      <div><dt>Evidence scan</dt><dd>Aug 4, 2026, 4:58:06 PM UTC UTC</dd></div>
-      <div><dt>Report generated</dt><dd>Aug 4, 2026, 4:58:34 PM UTC UTC</dd></div>
-      <div><dt>Analyzed commit</dt><dd><code>1061f2cd7d3b</code></dd></div>
+      <div><dt>Evidence scan</dt><dd>Aug 4, 2026, 5:20:31 PM UTC UTC</dd></div>
+      <div><dt>Report generated</dt><dd>Aug 4, 2026, 5:20:59 PM UTC UTC</dd></div>
+      <div><dt>Analyzed commit</dt><dd><code>332b74ff0347</code></dd></div>
       <div><dt>SonarQube</dt><dd>8.0.0.100354</dd></div>
       <div><dt>Branch</dt><dd><code>main</code></dd></div>
     </dl>
@@ -198,6 +204,29 @@
   </article>
     </div>
   </section>
+    <section aria-labelledby="architecture-heading">
+    <div class="section-heading"><div><p class="eyebrow">System context</p><h2 id="architecture-heading">Architecture and trust boundaries</h2></div></div>
+    <div class="notice">These diagrams document the intended system design and provide context for the security results. They are not scanner measurements.</div>
+    <div class="architecture-grid"><figure class="architecture-figure">
+    <a href="architecture/clinical-note-browser-privacy-ai-data-flow.png" target="_blank" rel="noopener">
+      <img src="architecture/clinical-note-browser-privacy-ai-data-flow.png" alt="Architecture diagram showing clinical users, browser-only storage and dictation, the SleepEdit server, Presidio services, OpenAI, and OpenFDA across trust boundaries." loading="lazy">
+    </a>
+    <figcaption>
+      <h3>Clinical note, browser privacy, and AI data flow</h3>
+      <p>Shows browser-only note state, local dictation, server-side PHI screening and image redaction, and external provider boundaries.</p>
+      <a href="architecture/clinical-note-browser-privacy-ai-data-flow.png" target="_blank" rel="noopener">Open full-size diagram</a>
+    </figcaption>
+  </figure><figure class="architecture-figure">
+    <a href="architecture/administration-protocol-persistence-deployment.png" target="_blank" rel="noopener">
+      <img src="architecture/administration-protocol-persistence-deployment.png" alt="Architecture diagram showing administration, reverse proxy hosting, the SleepEdit container, persistent storage, configuration, logs, and the Vosk artifact source across trust boundaries." loading="lazy">
+    </a>
+    <figcaption>
+      <h3>Administration, protocol, persistence, and deployment</h3>
+      <p>Shows administrative traffic, hosting and application boundaries, persistent storage, secret injection, logging, and the Vosk software-supply path.</p>
+      <a href="architecture/administration-protocol-persistence-deployment.png" target="_blank" rel="noopener">Open full-size diagram</a>
+    </figcaption>
+  </figure></div>
+  </section>
     <section aria-labelledby="issue-summary-heading">
     <div class="section-heading">
       <div><p class="eyebrow">69 open findings</p><h2 id="issue-summary-heading">Issue distribution</h2></div>
@@ -245,11 +274,11 @@
     <div class="metric-heading"><h3>First-party automated test source</h3></div>
     <p class="metric-definition">The physical nonblank source lines in explicitly scoped first-party automated tests. It indicates test investment, not a quality score.</p>
     <dl class="count-list">
-      <div><dt>Nonblank source lines</dt><dd>15,911</dd></div>
+      <div><dt>Nonblank source lines</dt><dd>15,919</dd></div>
       <div><dt>Test source files</dt><dd>102</dd></div>
     </dl>
     <div class="spacer"></div>
-    <div class="table-scroll"><table><thead><tr><th scope="col">Test area</th><th scope="col">Files</th><th scope="col">Nonblank lines</th></tr></thead><tbody><tr><td>.NET test project and harness</td><td>51</td><td>9,623</td></tr><tr><td>Browser unit and boundary tests</td><td>20</td><td>3,456</td></tr><tr><td>End-to-end browser tests and fixtures</td><td>22</td><td>2,214</td></tr><tr><td>Security-report and verification tests</td><td>9</td><td>618</td></tr></tbody></table></div>
+    <div class="table-scroll"><table><thead><tr><th scope="col">Test area</th><th scope="col">Files</th><th scope="col">Nonblank lines</th></tr></thead><tbody><tr><td>.NET test project and harness</td><td>51</td><td>9,623</td></tr><tr><td>Browser unit and boundary tests</td><td>20</td><td>3,456</td></tr><tr><td>End-to-end browser tests and fixtures</td><td>22</td><td>2,214</td></tr><tr><td>Security-report and verification tests</td><td>9</td><td>626</td></tr></tbody></table></div>
   </article>
     </div>
   </section>
