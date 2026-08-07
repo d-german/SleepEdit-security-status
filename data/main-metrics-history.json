@@ -1833,6 +1833,53 @@
           "low": 0
         }
       }
+    },
+    {
+      "schemaVersion": 1,
+      "branch": "main",
+      "commit": "284110e3debf56fd42f71b9afcfd09a8249e1371",
+      "scanDate": "2026-08-07T17:00:20.3860580+00:00",
+      "generatedAt": "2026-08-07T17:00:43.683Z",
+      "scanner": {
+        "sonarVersion": "8.0.0.100793",
+        "qualityGate": "ERROR"
+      },
+      "metrics": {
+        "securityRating": "A",
+        "maintainabilityRating": "A",
+        "vulnerabilities": 0,
+        "bugs": 0,
+        "codeSmells": 69,
+        "complexity": 3468,
+        "cognitiveComplexity": 1898,
+        "duplicatedLinesDensity": 0.1,
+        "linesOfCode": 18075
+      },
+      "coverage": {
+        "sonar": 84.2,
+        "sonarLine": 86.8,
+        "sonarBranch": 77.6,
+        "openCoverLine": 80.54,
+        "openCoverBranch": 70.42,
+        "frontendLine": 92.77,
+        "frontendBranch": 81.85
+      },
+      "dependencies": {
+        "nuget": {
+          "total": 0,
+          "critical": 0,
+          "high": 0,
+          "moderate": 0,
+          "low": 0
+        },
+        "npm": {
+          "total": 0,
+          "critical": 0,
+          "high": 0,
+          "moderate": 0,
+          "low": 0
+        }
+      }
     }
   ]
 }
