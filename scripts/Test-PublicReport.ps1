@@ -39,6 +39,8 @@ $resolvedRoot = (Resolve-Path -LiteralPath $SiteRoot).Path
 $indexPath = Join-Path $resolvedRoot 'index.html'
 $reportsPath = Join-Path $resolvedRoot 'reports'
 $trendPath = Join-Path $resolvedRoot 'trend/index.html'
+$architecturePath = Join-Path $resolvedRoot 'architecture/index.html'
+$architectureDiagramsPath = Join-Path $resolvedRoot 'architecture/diagrams'
 $historyPath = Join-Path $resolvedRoot 'data/main-metrics-history.json'
 
 if (-not (Test-Path -LiteralPath $indexPath -PathType Leaf)) {
@@ -52,6 +54,47 @@ if (-not (Test-Path -LiteralPath $trendPath -PathType Leaf)) {
 }
 
 Assert-ReportHtml -Path $trendPath -Description 'The public metrics trend page'
+
+if (-not (Test-Path -LiteralPath $architecturePath -PathType Leaf)) {
+    throw "The architecture page is missing: $architecturePath"
+}
+
+Assert-ReportHtml -Path $architecturePath -Description 'The architecture page'
+$architectureContent = Get-Content -LiteralPath $architecturePath -Raw
+$expectedArchitectureDiagrams = @(
+    'sleepedit-system-architecture.svg',
+    'sleepedit-sleep-note-authoring.svg',
+    'sleepedit-medication-tool.svg',
+    'sleepedit-protocol-viewer.svg',
+    'sleepedit-ai-assistant.svg',
+    'sleepedit-protocol-administration.svg',
+    'sleepedit-administration-settings.svg',
+    'sleepedit-desktop-setup.svg'
+)
+
+foreach ($diagramName in $expectedArchitectureDiagrams) {
+    $diagramPath = Join-Path $architectureDiagramsPath $diagramName
+    if (-not (Test-Path -LiteralPath $diagramPath -PathType Leaf)) {
+        throw "An architecture diagram is missing: $diagramPath"
+    }
+    if ($architectureContent -notmatch [regex]::Escape("diagrams/$diagramName")) {
+        throw "The architecture page does not reference $diagramName."
+    }
+
+    $diagramContent = Get-Content -LiteralPath $diagramPath -Raw
+    try {
+        [xml]$diagramXml = $diagramContent
+    }
+    catch {
+        throw "An architecture diagram is not valid SVG XML: $diagramPath"
+    }
+    if ($diagramXml.DocumentElement.LocalName -ne 'svg') {
+        throw "An architecture diagram does not have an SVG root: $diagramPath"
+    }
+    if ($diagramContent -match '(?i)<\?plantuml|plantuml-src|\sdata-[\w:.-]+=') {
+        throw "An architecture diagram contains PlantUML metadata: $diagramPath"
+    }
+}
 
 if (Test-Path -LiteralPath $historyPath -PathType Leaf) {
     $history = Get-Content -LiteralPath $historyPath -Raw | ConvertFrom-Json
@@ -89,4 +132,4 @@ foreach ($reportPath in $reportFiles) {
     }
 }
 
-Write-Host "Validated $($reportFiles.Count) public report(s), the report index, and the metrics trend page."
+Write-Host "Validated $($reportFiles.Count) public report(s), the report index, the metrics trend page, and $($expectedArchitectureDiagrams.Count) architecture diagrams."
