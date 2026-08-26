@@ -2,9 +2,9 @@
 
 Technical, security, privacy, deployment, and data-handling information for healthcare IT reviewers.
 
-**Last reviewed:** August 25, 2026<br>
-**Source baseline:** SleepEdit `main` commit `afd1d77f1b7fe7c16693e4cc155bdedbf70dfa08`<br>
-**Application version/framework:** The projects target .NET 10. The repository pins .NET SDK 10.0.301. No single product version is declared in the application project files; desktop installer versions are supplied when an installer is built.
+**Last reviewed:** August 26, 2026<br>
+**Source baseline:** SleepEdit release-candidate commit `446b45a3e86dbf7befedc22209a09f9cf44cba75`<br>
+**Application version/framework:** The projects target .NET 10. The repository pins .NET SDK 10.0.301. This review accompanies the planned SleepEdit Desktop 0.1.7 release.
 
 This guide reports what the reviewed source and checked-in configuration establish. It uses four status terms:
 
@@ -238,7 +238,7 @@ The application does not encrypt or persist the web key itself. Protection at re
 
 ### Technical detail
 
-Machine-scope DPAPI binds the protected value to Windows rather than to one user account. The installer grants the local Users group full control over the `%ProgramData%\SleepEdit` directory. Hospitals should therefore treat local-user access to the protected key and settings file as a security-review item, not assume per-user isolation.
+Machine-scope DPAPI binds the protected value to Windows rather than to one user account. The installer restricts the machine root, settings, content root, and security directory to read/execute for standard Users while leaving only the state, WebView2, cache, and shared-data directories writable. SYSTEM and local Administrators retain full control. Upgrade/repair reapplies protected-file ACLs. This protects the default local layout from ordinary-user replacement but is not per-user cryptographic isolation.
 
 ## Can a customer bring its own OpenAI key, and whose BAA applies?
 
@@ -270,7 +270,7 @@ There is no in-application web reset or password-recovery workflow. An operator 
 
 ### Technical detail
 
-Unlock state is an in-process Boolean and ends when the desktop process closes. There is no username, role, MFA, lockout, rate limit, or durable login audit. Reset replaces the salt and hash and relies on the operator's filesystem write access to the configured shared content folder; it does not require the old password.
+Unlock state is an in-process Boolean and ends when the desktop process closes. There is no username, role, MFA, lockout, rate limit, or durable login audit. Reset replaces the salt and hash and does not require the old password, but the reset path launches the setup process through Windows UAC and requires local-administrator approval. The installer protects the default local security directory from standard-user writes. A configured external share remains dependent on customer-managed share and NTFS permissions.
 
 ## Does SleepEdit support SSO, roles, or enterprise identity?
 
@@ -282,11 +282,11 @@ Enterprise SSO or a reverse-proxy identity layer would be a separate deployment/
 
 ## Which features and endpoints require administrator access?
 
-**Confirmed from source, with one identified exception.** Web middleware protects `/Admin` and `/ProtocolEditor`, covering medication administration, theme administration, AI policy, and protocol editing. Anti-forgery validation protects mutation requests. Normal users can view protocols, edit working notes, generate notes, use medications, and—if enabled—use AI.
+**Confirmed from source.** Web middleware protects `/Admin` and `/ProtocolEditor`, covering medication administration, theme administration, AI policy, and protocol editing. Destructive Sleep Note configuration operations and medication-catalog removal also require the server-derived administrator session. Anti-forgery validation protects mutation requests. Normal users can view protocols, edit working notes, generate notes, use medications, add shared mask/medication catalog choices in the demonstration workflow, and—if enabled—use AI.
 
 ### Technical detail
 
-The older `/SleepNote/api/config/*` mask-type and mask-size mutation endpoints are outside the protected path boundary. They require an anti-forgery token but not an admin-unlocked session. This is listed as a private remediation gap; hospitals should not treat all configuration mutation as fully admin-authorized until corrected.
+Shared mask-type, mask-size, and medication additions remain normal technician operations by product decision for the demonstration workflow. Removal and reset operations require the administrator session and anti-forgery validation. Named users, enterprise roles, and hospital identity integration are not implemented.
 
 ## Can browser manipulation grant administrator access?
 
@@ -378,6 +378,14 @@ An enterprise deployment would need persistent storage, TLS termination, secret 
 ### Technical detail
 
 The current source targets 64-bit Windows and publishes a self-contained .NET `win-x64` payload. It stores the WebView2 profile under `%ProgramData%\SleepEdit\webview2`. Availability of the required Microsoft WebView2 runtime should be validated in the hospital desktop image.
+
+## Can security and architecture evidence be viewed without access to the public website?
+
+**Confirmed from source.** Yes. The desktop release bundles a validated static snapshot of the security report, this IT review, architecture/workflow diagrams, and trend page. The About page opens those files inside the local WPF/Blazor shell, so viewing the evidence does not require access to `security.sleepedit.net`.
+
+### Technical detail
+
+The snapshot is copied from an explicit public-file allowlist, records its source commit in `snapshot.json`, and is validated before installer packaging. This makes the evidence pages local; it does not make optional OpenAI or OpenFDA requests network-free.
 
 ## How is desktop software installed and updated?
 
@@ -891,7 +899,7 @@ Any support VPN, hosting-console access, endpoint-management channel, or hospita
 
 ### Technical detail
 
-Unsigned MSI status, writable ProgramData, model files, DLL loading, and WebView2 subprocesses are likely application-control review points. No vendor-specific EDR certification was found.
+Unsigned MSI status, the intentionally writable runtime-data subdirectories, model files, DLL loading, and WebView2 subprocesses are likely application-control review points. No vendor-specific EDR certification was found.
 
 ## How is configuration drift detected?
 
