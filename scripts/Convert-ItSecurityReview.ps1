@@ -13,7 +13,7 @@ $html = @"
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-__STYLE_HASH__'">
   <title>SleepEdit IT &amp; Security Review Guide</title>
   <style>
   :root { color-scheme:light; --navy:#020f59; --blue:#00449d; --ink:#18202b; --muted:#586577; --line:#d8dee8; --surface:#fff; --page:#f4f7fb; --soft:#eef4fb; --warning:#8a4b08; }
@@ -59,6 +59,11 @@ $content
 </body>
 </html>
 "@
+
+$style = [regex]::Match($html, '(?s)<style>(.*?)</style>').Groups[1].Value.Replace("`r`n", "`n")
+$styleHash = [Convert]::ToBase64String(
+    [Security.Cryptography.SHA256]::HashData([Text.Encoding]::UTF8.GetBytes($style)))
+$html = $html.Replace('__STYLE_HASH__', $styleHash)
 
 $directory = Split-Path -Parent $OutputPath
 New-Item -ItemType Directory -Path $directory -Force | Out-Null
