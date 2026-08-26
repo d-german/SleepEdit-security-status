@@ -41,6 +41,8 @@ $reportsPath = Join-Path $resolvedRoot 'reports'
 $trendPath = Join-Path $resolvedRoot 'trend/index.html'
 $architecturePath = Join-Path $resolvedRoot 'architecture/index.html'
 $architectureDiagramsPath = Join-Path $resolvedRoot 'architecture/diagrams'
+$reviewMarkdownPath = Join-Path $resolvedRoot 'it-security-review/IT-Security-Review.md'
+$reviewPath = Join-Path $resolvedRoot 'it-security-review/index.html'
 $historyPath = Join-Path $resolvedRoot 'data/main-metrics-history.json'
 
 if (-not (Test-Path -LiteralPath $indexPath -PathType Leaf)) {
@@ -61,6 +63,9 @@ if (-not (Test-Path -LiteralPath $architecturePath -PathType Leaf)) {
 
 Assert-ReportHtml -Path $architecturePath -Description 'The architecture page'
 $architectureContent = Get-Content -LiteralPath $architecturePath -Raw
+if ($architectureContent -notmatch 'it-security-review/index\.html') {
+    throw 'The architecture page does not link to the IT and security review guide.'
+}
 $expectedArchitectureDiagrams = @(
     'sleepedit-system-architecture.svg',
     'sleepedit-sleep-note-authoring.svg',
@@ -94,6 +99,37 @@ foreach ($diagramName in $expectedArchitectureDiagrams) {
     if ($diagramContent -match '(?i)<\?plantuml|plantuml-src|\sdata-[\w:.-]+=') {
         throw "An architecture diagram contains PlantUML metadata: $diagramPath"
     }
+}
+
+if (-not (Test-Path -LiteralPath $reviewMarkdownPath -PathType Leaf) -or
+    -not (Test-Path -LiteralPath $reviewPath -PathType Leaf)) {
+    throw 'The public IT and security review Markdown or rendered page is missing.'
+}
+
+Assert-ReportHtml -Path $reviewPath -Description 'The public IT and security review guide'
+$reviewMarkdown = Get-Content -LiteralPath $reviewMarkdownPath -Raw
+$reviewContent = Get-Content -LiteralPath $reviewPath -Raw
+if ($reviewMarkdown -notmatch '^# SleepEdit IT & Security Review Guide' -or
+    $reviewContent -notmatch 'SleepEdit IT &amp; Security Review Guide' -or
+    $reviewContent -notmatch 'api\.openai\.com' -or
+    $reviewContent -match 'Gaps likely to be raised by hospital IT') {
+    throw 'The public IT and security review guide is incomplete or contains private gap content.'
+}
+if ($reviewMarkdown -match '(?i)Verified from|[a-z]:\\|AdminAccess__Password\s*[=:]\s*\S+') {
+    throw 'The public IT and security review Markdown exposes private evidence or a local secret boundary.'
+}
+
+$temporaryReview = Join-Path ([System.IO.Path]::GetTempPath()) "sleepedit-it-security-review-$PID.html"
+try {
+    & (Join-Path $PSScriptRoot 'Convert-ItSecurityReview.ps1') `
+        -SourcePath $reviewMarkdownPath `
+        -OutputPath $temporaryReview
+    if ((Get-Content -LiteralPath $temporaryReview -Raw) -cne $reviewContent) {
+        throw 'The rendered IT and security review is stale. Run scripts/Convert-ItSecurityReview.ps1.'
+    }
+}
+finally {
+    Remove-Item -LiteralPath $temporaryReview -Force -ErrorAction SilentlyContinue
 }
 
 if (Test-Path -LiteralPath $historyPath -PathType Leaf) {
@@ -132,4 +168,4 @@ foreach ($reportPath in $reportFiles) {
     }
 }
 
-Write-Host "Validated $($reportFiles.Count) public report(s), the report index, the metrics trend page, and $($expectedArchitectureDiagrams.Count) architecture diagrams."
+Write-Host "Validated $($reportFiles.Count) public report(s), the IT and security review, the report index, the metrics trend page, and $($expectedArchitectureDiagrams.Count) architecture diagrams."
