@@ -49,7 +49,6 @@ $html = @"
     <a href="../index.html">Security &amp; quality reports</a>
     <a href="index.html" aria-current="page">IT &amp; security review</a>
     <a href="../architecture/index.html">Architecture &amp; workflows</a>
-    <a href="../trend/index.html">Security &amp; quality trend</a>
   </nav>
   <article>
 $content
