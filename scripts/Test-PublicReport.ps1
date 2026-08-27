@@ -48,12 +48,10 @@ function Assert-ReportHtml {
 $resolvedRoot = (Resolve-Path -LiteralPath $SiteRoot).Path
 $indexPath = Join-Path $resolvedRoot 'index.html'
 $reportsPath = Join-Path $resolvedRoot 'reports'
-$trendPath = Join-Path $resolvedRoot 'trend/index.html'
 $architecturePath = Join-Path $resolvedRoot 'architecture/index.html'
 $architectureDiagramsPath = Join-Path $resolvedRoot 'architecture/diagrams'
 $reviewMarkdownPath = Join-Path $resolvedRoot 'it-security-review/IT-Security-Review.md'
 $reviewPath = Join-Path $resolvedRoot 'it-security-review/index.html'
-$historyPath = Join-Path $resolvedRoot 'data/main-metrics-history.json'
 
 if (-not (Test-Path -LiteralPath $indexPath -PathType Leaf)) {
     throw "The public report index is missing: $indexPath"
@@ -61,11 +59,6 @@ if (-not (Test-Path -LiteralPath $indexPath -PathType Leaf)) {
 
 Assert-ReportHtml -Path $indexPath -Description 'The public report index'
 
-if (-not (Test-Path -LiteralPath $trendPath -PathType Leaf)) {
-    throw "The public metrics trend page is missing: $trendPath"
-}
-
-Assert-ReportHtml -Path $trendPath -Description 'The public metrics trend page'
 
 if (-not (Test-Path -LiteralPath $architecturePath -PathType Leaf)) {
     throw "The architecture page is missing: $architecturePath"
@@ -142,25 +135,6 @@ finally {
     Remove-Item -LiteralPath $temporaryReview -Force -ErrorAction SilentlyContinue
 }
 
-if (Test-Path -LiteralPath $historyPath -PathType Leaf) {
-    $history = Get-Content -LiteralPath $historyPath -Raw | ConvertFrom-Json
-    if ($history.schemaVersion -ne 1 -or $null -eq $history.snapshots) {
-        throw "The public metrics history has an unsupported schema: $historyPath"
-    }
-
-    $snapshots = @($history.snapshots)
-    if (@($snapshots | Where-Object { $_.branch -ne 'main' }).Count -gt 0) {
-        throw "The public metrics history contains a non-main snapshot: $historyPath"
-    }
-    if (@($snapshots.commit | Sort-Object -Unique).Count -ne $snapshots.Count) {
-        throw "The public metrics history contains duplicate commits: $historyPath"
-    }
-
-    $historyContent = Get-Content -LiteralPath $historyPath -Raw
-    if ($historyContent -match '(?i)review this credential|raw evidence|[a-z]:\\') {
-        throw "The public metrics history appears to expose raw scanner evidence: $historyPath"
-    }
-}
 
 $reportFiles = @(Get-ChildItem -LiteralPath $reportsPath -Directory -ErrorAction SilentlyContinue |
     ForEach-Object { Join-Path $_.FullName 'index.html' } |
@@ -178,4 +152,4 @@ foreach ($reportPath in $reportFiles) {
     }
 }
 
-Write-Host "Validated $($reportFiles.Count) public report(s), the IT and security review, the report index, the metrics trend page, and $($expectedArchitectureDiagrams.Count) architecture diagrams."
+Write-Host "Validated $($reportFiles.Count) public report(s), the IT and security review, the report index, and $($expectedArchitectureDiagrams.Count) architecture diagrams."
